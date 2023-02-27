@@ -4,11 +4,43 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int number = 0;
+  void addCounter() {
+    setState(() {
+      number++;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp();
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Statefull Widget"),
+        ),
+        body: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              number.toString(),
+              style: TextStyle(fontSize: 10 + number.toDouble()),
+            ),
+            ElevatedButton(
+              onPressed: addCounter,
+              child: Text("Add counter"),
+            )
+          ],
+        )),
+      ),
+    );
   }
 }
