@@ -14,6 +14,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   PostResult postResult = null;
   User user = null;
+  String output = "No user lists";
 
   @override
   Widget build(BuildContext context) {
@@ -28,19 +29,22 @@ class _MyAppState extends State<MyApp> {
                 // ignore: prefer_interpolation_to_compose_strings
                 ? user.id + " | " + user.name
                 : "Data not available"),
+            Text(output),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 ElevatedButton(
                     onPressed: () {
-                      PostResult.connectToAPI("Wijaya", "Engineer")
-                          .then((value) {
-                        this.postResult = value;
+                      User.getUsers("1").then((users) {
+                        output = "";
+                        for (int i = 0; i < users.length; i++) {
+                          output = output + "[ " + users[i].name + " ]";
+                        }
                         setState(() {});
                       });
                     },
                     child: Text(
-                      "POST",
+                      "Get all users",
                     )),
                 ElevatedButton(
                     onPressed: () {
